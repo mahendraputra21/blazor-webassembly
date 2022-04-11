@@ -1,0 +1,54 @@
+﻿@inject NavigationManager _nav
+
+<EditForm Model="@Dev" OnValidSubmit="@OnValidSubmit">
+<DataAnnotationsValidator />
+<div class="mb-3">
+    <label>First Name :</label>
+    <div>
+        <InputText @bind-Value="@Dev.FirstName"  class="form-control"/>
+        <ValidationMessage For="@(() => Dev.FirstName)" />
+    </div>
+</div>
+<div class="mb-3">
+    <div>
+        <label>Last Name :</label>
+        <div>
+            <InputText @bind-Value="@Dev.LastName" class="form-control"/>
+            <ValidationMessage For="@(() => Dev.LastName)" />
+        </div>
+    </div>
+</div>
+<div class="mb-3">
+    <div>
+        <label>Email :</label>
+        <div>
+            <InputText @bind-Value="@Dev.Email" class="form-control"/>
+            <ValidationMessage For="@(() => Dev.Email)" />
+        </div>
+    </div>
+</div>
+<div class="mb-3">
+    <div>
+        <label>Experience :</label>
+        <div>
+            <InputNumber @bind-Value="@Dev.Experience" class="form-control" />
+            <ValidationMessage For="@(() => Dev.Experience)" />
+        </div>
+    </div>
+</div>
+
+<button type="submit" class="btn btn-success">
+    @ButtonText
+</button>
+<button type="reset" class="btn btn-primary" onclick="@(() => _nav.NavigateTo("/developer"))">
+    Back
+</button>
+
+
+</EditForm>
+
+@code {
+    [Parameter] public Developer Dev { get; set; }
+    [Parameter] public string? ButtonText { get; set; }
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+}

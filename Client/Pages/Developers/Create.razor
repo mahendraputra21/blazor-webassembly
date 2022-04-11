@@ -1,0 +1,18 @@
+﻿@page "/developer/create"
+@inject HttpClient _httpClient
+@inject NavigationManager _uriHelper
+
+<h3>Create The Developer</h3>
+
+<Form ButtonText="Create Developer" Dev="@_dev" OnValidSubmit="@CreateDeveloper"></Form>
+
+@code {
+
+    readonly Developer _dev = new();
+
+    private async Task CreateDeveloper()
+    {
+        await _httpClient.PostAsJsonAsync("api/developer", _dev);
+        _uriHelper.NavigateTo("developer");
+    }
+}

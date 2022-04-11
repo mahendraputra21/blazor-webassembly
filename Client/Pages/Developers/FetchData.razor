@@ -1,0 +1,90 @@
+﻿@page "/developer"
+@using System.Globalization
+@inject HttpClient _client
+@inject IJSRuntime _jsRuntime
+
+<h3>List of Developers</h3>
+<small>Add as many developers as you wish.</small>
+<div class="mb-3">
+    <a class="btn btn-success" href="developer/create"><i class="oi oi-plus"></i> Create New</a>
+</div>
+<br/>
+
+@if (Developers == null)
+{
+    <text>Loading...</text>
+}
+else if (Developers.Length == 0)
+{
+    <text>No Records Found.</text>
+}
+else
+{
+    <div class="mb-3">
+        <input class="form-control" type="text" placeholder="Search for Developers..."
+               @bind="Filter"
+               @bind:event="oninput">
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th style="display:none">Id</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Experience (Years)</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+            @foreach (var dev in Developers)
+            {
+                if(!IsVisible(dev))
+                    continue;
+                <tr>
+                    <td style="display:none">@dev.Id</td>
+                    <td>@dev.FirstName</td>
+                    <td>@dev.LastName</td>
+                    <td>@dev.Email</td>
+                    <td>@dev.Experience</td>
+                    <td>
+                        <a class="btn btn-success" href="developer/edit/@dev.Id">Edit</a>
+                        <button class="btn btn-danger" @onclick="@(() => Delete(dev.Id))">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@code {
+    private Developer[]? Developers { get; set; }
+    public string? Filter { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Developers = (await _client.GetFromJsonAsync<Developer[]>("api/Developer"))!;
+    }
+
+    private async Task Delete(int developerId)
+    {
+        var dev = Developers!.First(x => x.Id == developerId);
+        if (await _jsRuntime.InvokeAsync<bool>("confirm", $"Do you want to delete {dev.FirstName}'s Record?"))
+        {
+            await _client.DeleteAsync($"api/Developer/{developerId}");
+            await OnInitializedAsync();
+        }
+    }
+
+    private bool IsVisible(Developer developer)
+    {
+        return string.IsNullOrEmpty(Filter) || 
+               developer.FirstName.Contains(Filter, StringComparison.OrdinalIgnoreCase) || 
+               developer.LastName.Contains(Filter, StringComparison.OrdinalIgnoreCase) || 
+               developer.Email.Contains(Filter, StringComparison.OrdinalIgnoreCase) || 
+               developer.Experience.ToString(CultureInfo.InvariantCulture).StartsWith(Filter);
+    }
+
+}

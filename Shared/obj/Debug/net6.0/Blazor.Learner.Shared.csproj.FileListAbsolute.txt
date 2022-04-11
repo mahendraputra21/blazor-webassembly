@@ -1,0 +1,12 @@
+D:\training\NET6.0\Blazor\1\Blazor.Learner\Blazor.Learner\Shared\bin\Debug\net6.0\Blazor.Learner.Shared.deps.json
+D:\training\NET6.0\Blazor\1\Blazor.Learner\Blazor.Learner\Shared\bin\Debug\net6.0\Blazor.Learner.Shared.dll
+D:\training\NET6.0\Blazor\1\Blazor.Learner\Blazor.Learner\Shared\bin\Debug\net6.0\Blazor.Learner.Shared.pdb
+D:\training\NET6.0\Blazor\1\Blazor.Learner\Blazor.Learner\Shared\obj\Debug\net6.0\Blazor.Learner.Shared.csproj.AssemblyReference.cache
+D:\training\NET6.0\Blazor\1\Blazor.Learner\Blazor.Learner\Shared\obj\Debug\net6.0\Blazor.Learner.Shared.GeneratedMSBuildEditorConfig.editorconfig
+D:\training\NET6.0\Blazor\1\Blazor.Learner\Blazor.Learner\Shared\obj\Debug\net6.0\Blazor.Learner.Shared.AssemblyInfoInputs.cache
+D:\training\NET6.0\Blazor\1\Blazor.Learner\Blazor.Learner\Shared\obj\Debug\net6.0\Blazor.Learner.Shared.AssemblyInfo.cs
+D:\training\NET6.0\Blazor\1\Blazor.Learner\Blazor.Learner\Shared\obj\Debug\net6.0\Blazor.Learner.Shared.csproj.CoreCompileInputs.cache
+D:\training\NET6.0\Blazor\1\Blazor.Learner\Blazor.Learner\Shared\obj\Debug\net6.0\Blazor.Learner.Shared.dll
+D:\training\NET6.0\Blazor\1\Blazor.Learner\Blazor.Learner\Shared\obj\Debug\net6.0\refint\Blazor.Learner.Shared.dll
+D:\training\NET6.0\Blazor\1\Blazor.Learner\Blazor.Learner\Shared\obj\Debug\net6.0\Blazor.Learner.Shared.pdb
+D:\training\NET6.0\Blazor\1\Blazor.Learner\Blazor.Learner\Shared\obj\Debug\net6.0\ref\Blazor.Learner.Shared.dll

@@ -1,0 +1,28 @@
+﻿@page "/developer/edit/{DeveloperId:int}"
+@inject HttpClient _httpClient
+@inject NavigationManager _uriHelper
+@inject IJSRuntime _jsRuntime
+
+<h3>Edit The Developer</h3>
+
+<Form ButtonText="Update" Dev="_dev" OnValidSubmit="@EditDeveloper"></Form>
+
+@code {
+    [Parameter]
+    public int DeveloperId { get; set; }
+
+    Developer _dev = new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _dev = (await _httpClient.GetFromJsonAsync<Developer>($"api/developer/{DeveloperId}"))!;
+    }
+
+    private async Task EditDeveloper()
+    {
+        await _httpClient.PutAsJsonAsync("api/developer", _dev);
+        await _jsRuntime.InvokeVoidAsync("alert", $"Updated Successfully");
+        _uriHelper.NavigateTo("developer");
+    }
+
+}
