@@ -19,7 +19,7 @@ This repository contains the example How to Implement Blazor WebAssembly CRUD us
 ## How to Run using SWAGGER-UI
 
 * type in the address browser https://localhost:<port>/swagger/index.html
-![Screenshot](https://github.com/mahendraputra21/blazor-webassembly-learner/blob/main/images/FetchData.png)
+![Screenshot](https://github.com/mahendraputra21/blazor-webassembly-learner/blob/main/images/Swagger.png)
 
 ## UI Developer CRUD 
 * Fetch Data
