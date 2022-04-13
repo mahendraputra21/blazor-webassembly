@@ -12,5 +12,8 @@ namespace Blazor.Learner.Shared.Models
         [Required]
         public string Email { get; set; }
         public decimal Experience { get; set; }
+        public int PositionId { get; set; }
+
+        public Position Position { get; set; }
     }
 }

@@ -265,3 +265,5 @@ _ReSharper.*
 bin
 obj
 packages
+Server/obj/Debug/
+Shared/obj/Debug/
