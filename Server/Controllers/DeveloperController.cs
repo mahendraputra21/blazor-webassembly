@@ -19,14 +19,31 @@ namespace Blazor.Learner.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var devs = await _context.Developers.ToListAsync();
+            var devs = await _context.Developers.Select(x => new
+            {
+                x.FirstName,
+                x.LastName,
+                x.Email,
+                x.Position.PositionName,
+                x.Experience
+            }).ToListAsync();
             return Ok(devs);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var dev = await _context.Developers.FirstOrDefaultAsync(a => a.Id == id);
+            var dev = await _context.Developers
+                .Select(x => new
+                {
+                    x.Id,
+                    x.FirstName,
+                    x.LastName,
+                    x.Email,
+                    x.Position.PositionName,
+                    x.Experience
+                })
+                .FirstOrDefaultAsync(a => a. == id);
             return Ok(dev);
         }
 
