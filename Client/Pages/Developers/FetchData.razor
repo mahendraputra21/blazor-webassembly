@@ -33,6 +33,7 @@ else
             <th scope="col">First Name</th>
             <th scope="col">Last Name</th>
             <th scope="col">Email</th>
+            <th scope="col">Position</th>
             <th scope="col">Experience (Years)</th>
             <th>Action</th>
         </tr>
@@ -47,6 +48,7 @@ else
                     <td>@dev.FirstName</td>
                     <td>@dev.LastName</td>
                     <td>@dev.Email</td>
+                    <td>@dev.PositionName</td>
                     <td>@dev.Experience</td>
                     <td>
                         <a class="btn btn-success" href="developer/edit/@dev.Id">Edit</a>
@@ -60,12 +62,12 @@ else
 
 
 @code {
-    private Developer[]? Developers { get; set; }
+    private DeveloperModel[]? Developers { get; set; }
     public string? Filter { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        Developers = (await _client.GetFromJsonAsync<Developer[]>("api/Developer"))!;
+        Developers = (await _client.GetFromJsonAsync<DeveloperModel[]>("api/Developer"))!;
     }
 
     private async Task Delete(int developerId)
@@ -78,13 +80,14 @@ else
         }
     }
 
-    private bool IsVisible(Developer developer)
+    private bool IsVisible(DeveloperModel developer)
     {
         return string.IsNullOrEmpty(Filter) || 
                developer.FirstName.Contains(Filter, StringComparison.OrdinalIgnoreCase) || 
                developer.LastName.Contains(Filter, StringComparison.OrdinalIgnoreCase) || 
                developer.Email.Contains(Filter, StringComparison.OrdinalIgnoreCase) || 
-               developer.Experience.ToString(CultureInfo.InvariantCulture).StartsWith(Filter);
+               developer.Experience.ToString(CultureInfo.InvariantCulture).StartsWith(Filter) ||
+               developer.PositionName!.Contains(Filter, StringComparison.OrdinalIgnoreCase);
     }
 
 }

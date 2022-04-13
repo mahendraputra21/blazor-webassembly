@@ -2,7 +2,7 @@
 
 namespace Blazor.Learner.Shared.Models
 {
-    public class Developer
+    public class DeveloperModel
     {
         public int Id { get; set; }
         [Required]
@@ -12,7 +12,8 @@ namespace Blazor.Learner.Shared.Models
         [Required]
         public string Email { get; set; }
         public decimal Experience { get; set; }
+        [Required]
         public int PositionId { get; set; }
-
+        public string? PositionName { get; set; }
     }
 }
