@@ -14,6 +14,5 @@ namespace Blazor.Learner.Shared.Models
         public decimal Experience { get; set; }
         public int PositionId { get; set; }
 
-        public Position Position { get; set; }
     }
 }
