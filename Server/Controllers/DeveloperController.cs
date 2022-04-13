@@ -1,4 +1,5 @@
 ﻿using Blazor.Learner.Server.Data;
+using Blazor.Learner.Shared.Domains;
 using Blazor.Learner.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,46 +20,60 @@ namespace Blazor.Learner.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var devs = await _context.Developers.Select(x => new
-            {
-                x.Id,
-                x.FirstName,
-                x.LastName,
-                x.Email,
-                x.Experience
-            }).ToListAsync();
-            return Ok(devs);
+            var devList = await (from devs in _context.Developers.AsNoTracking()
+                join position in _context.Positions.AsNoTracking()
+                    on devs.PositionId equals position.PositionId
+                select new
+                {
+                    devs.Id,
+                    devs.FirstName,
+                    devs.LastName,
+                    devs.Email,
+                    position.PositionId,
+                    position.PositionName,
+                    devs.Experience
+                }).ToListAsync();
+
+            return Ok(devList);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var dev = await _context.Developers
-                .Select(x => new
+            var existingDev = await (from devs in _context.Developers
+                join position in _context.Positions
+                    on devs.PositionId equals position.PositionId
+                select new
                 {
-                    x.Id,
-                    x.FirstName,
-                    x.LastName,
-                    x.Email,
-                    x.PositionId,
-                    x.Experience
-                })
-                .FirstOrDefaultAsync(a => a.Id == id);
-            return Ok(dev);
+                    devs.Id,
+                    devs.FirstName,
+                    devs.LastName,
+                    devs.Email,
+                    position.PositionId,
+                    position.PositionName,
+                    devs.Experience
+                }).FirstOrDefaultAsync(x => x.Id == id);
+
+            return Ok(existingDev);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Developer developer)
+        public async Task<IActionResult> Post(DeveloperModel developerModel)
         {
-            _context.Add(developer);
+
+            var developer = DeveloperMapping(developerModel);
+            _context.Developers.Add(developer);
             await _context.SaveChangesAsync();
             return Ok(developer.Id);
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(Developer developer)
+        public async Task<IActionResult> Put(DeveloperModel developerModel)
         {
-            _context.Developers.Update(developer);
+
+            var developer = DeveloperMapping(developerModel);
+            _context.Entry(developer).State = EntityState.Modified;
+            _context.Update(developer);
             await _context.SaveChangesAsync();
             return NoContent();
         }
@@ -71,6 +86,24 @@ namespace Blazor.Learner.Server.Controllers
             await _context.SaveChangesAsync();
             return NoContent();
         }
+
+        #region PrivateMethod
+        private static Developer DeveloperMapping(DeveloperModel developerModel)
+        {
+            Developer? developer = null;
+
+            developer = new()
+            {
+                FirstName = developerModel.FirstName,
+                LastName = developerModel.LastName,
+                Email = developerModel.Email,
+                PositionId = developerModel.PositionId,
+                Experience = developerModel.Experience
+            };
+            return developer;
+        }
+
+        #endregion
 
     }
 }

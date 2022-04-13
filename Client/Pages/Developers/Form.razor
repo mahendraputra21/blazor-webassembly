@@ -1,4 +1,5 @@
 ﻿@inject NavigationManager _nav
+@inject HttpClient _client
 
 <EditForm Model="@Dev" OnValidSubmit="@OnValidSubmit">
 <DataAnnotationsValidator />
@@ -29,6 +30,24 @@
 </div>
 <div class="mb-3">
     <div>
+        <label>Position :</label>
+        <div>
+            <select class="form-control" @bind="@Dev.PositionId" OnValueChanged="OnValueChanged">
+                @if (Positions != null)
+                {
+                    foreach (var position in Positions)
+                    {
+                        <option value="@position.PositionId">@position.PositionName</option>
+                    }
+                }
+            </select>
+            <ValidationMessage For="@(() => Dev.PositionId)" />
+        </div>
+    </div>
+</div>
+
+<div class="mb-3">
+    <div>
         <label>Experience :</label>
         <div>
             <InputNumber @bind-Value="@Dev.Experience" class="form-control" />
@@ -48,7 +67,24 @@
 </EditForm>
 
 @code {
-    [Parameter] public Developer Dev { get; set; }
+    [Parameter] public DeveloperModel? Dev { get; set; }
     [Parameter] public string? ButtonText { get; set; }
     [Parameter] public EventCallback OnValidSubmit { get; set; }
+    [Parameter] public EventCallback ValueChanged { get; set; }
+
+    private Position[]? Positions { get; set; }
+    public int? Value { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Positions = (await _client.GetFromJsonAsync<Position[]>("/api/Position"));
+    }
+
+    private Task OnValueChanged(ChangeEventArgs e) {  
+        Value = (int?)e.Value;  
+        return ValueChanged.InvokeAsync(Value);  
+    }
+
+   
+
 }
