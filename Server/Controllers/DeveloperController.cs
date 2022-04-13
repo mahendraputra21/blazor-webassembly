@@ -21,10 +21,10 @@ namespace Blazor.Learner.Server.Controllers
         {
             var devs = await _context.Developers.Select(x => new
             {
+                x.Id,
                 x.FirstName,
                 x.LastName,
                 x.Email,
-                x.Position.PositionName,
                 x.Experience
             }).ToListAsync();
             return Ok(devs);
@@ -40,10 +40,10 @@ namespace Blazor.Learner.Server.Controllers
                     x.FirstName,
                     x.LastName,
                     x.Email,
-                    x.Position.PositionName,
+                    x.PositionId,
                     x.Experience
                 })
-                .FirstOrDefaultAsync(a => a. == id);
+                .FirstOrDefaultAsync(a => a.Id == id);
             return Ok(dev);
         }
 
@@ -58,7 +58,7 @@ namespace Blazor.Learner.Server.Controllers
         [HttpPut]
         public async Task<IActionResult> Put(Developer developer)
         {
-            _context.Entry(developer).State = EntityState.Modified;
+            _context.Developers.Update(developer);
             await _context.SaveChangesAsync();
             return NoContent();
         }

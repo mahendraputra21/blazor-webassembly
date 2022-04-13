@@ -13,24 +13,24 @@ namespace Blazor.Learner.Server.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            modelBuilder.Entity<Developer>(entity =>
-            {
-                entity.HasKey(e => e.PositionId);
+            //modelBuilder.Entity<Developer>(entity =>
+            //{
+            //    entity.HasKey(e => e.PositionId);
 
-                entity.HasOne(d => d.Position)
-                    .WithMany(p => p.Developers)
-                    .HasForeignKey(d => d.PositionId)
-                    .HasConstraintName("DF__Developer__Posit__38996AB5");
-            });
+            //    //entity.HasOne(d => d.Position)
+            //    //    .WithMany(p => p.Developers)
+            //    //    .HasForeignKey(d => d.PositionId)
+            //    //    .HasConstraintName("DF__Developer__Posit__38996AB5");
+            //});
 
 
-            modelBuilder.Entity<Position>(entity =>
-            {
-                entity.Property(e => e.PositionName)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-            });
+            //modelBuilder.Entity<Position>(entity =>
+            //{
+            //    entity.Property(e => e.PositionName)
+            //        .IsRequired()
+            //        .HasMaxLength(50)
+            //        .IsUnicode(false);
+            //});
         }
     }
 }
