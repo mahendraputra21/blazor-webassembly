@@ -10,15 +10,15 @@ namespace Blazor.Learner.Server.Data
         public DbSet<Developer> Developers { get; set; }
         public DbSet<Position> Positions { get; set; }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<Developer>(entity =>
-        //    {
-        //        // Set key for entity
-        //        entity.HasKey(p => p.Id);
-        //    });
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Developer>(entity =>
+            {
+                // Set key for entity
+                entity.HasKey(p => p.Id);
+            });
 
-        //    base.OnModelCreating(modelBuilder);
-        //}
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }
