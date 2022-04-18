@@ -40,8 +40,8 @@ namespace Blazor.Learner.Server.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var existingDev = await (from devs in _context.Developers
-                join position in _context.Positions
+            var existingDev = await (from devs in _context.Developers.AsNoTracking()
+                join position in _context.Positions.AsNoTracking()
                     on devs.PositionId equals position.PositionId
                 select new
                 {
@@ -61,7 +61,7 @@ namespace Blazor.Learner.Server.Controllers
         public async Task<IActionResult> Post(DeveloperModel developerModel)
         {
 
-            var developer = DeveloperMapping(developerModel);
+            var developer = DeveloperAddMapping(developerModel);
             _context.Developers.Add(developer);
             await _context.SaveChangesAsync();
             return Ok(developer.Id);
@@ -71,9 +71,8 @@ namespace Blazor.Learner.Server.Controllers
         public async Task<IActionResult> Put(DeveloperModel developerModel)
         {
 
-            var developer = DeveloperMapping(developerModel);
-            _context.Entry(developer).State = EntityState.Modified;
-            _context.Update(developer);
+            var developer = DeveloperUpdateMapping(developerModel);
+            _context.Developers.Update(developer);
             await _context.SaveChangesAsync();
             return NoContent();
         }
@@ -88,12 +87,28 @@ namespace Blazor.Learner.Server.Controllers
         }
 
         #region PrivateMethod
-        private static Developer DeveloperMapping(DeveloperModel developerModel)
+        private static Developer DeveloperAddMapping(DeveloperModel developerModel)
         {
             Developer? developer = null;
 
             developer = new()
             {
+                FirstName = developerModel.FirstName,
+                LastName = developerModel.LastName,
+                Email = developerModel.Email,
+                PositionId = developerModel.PositionId,
+                Experience = developerModel.Experience
+            };
+            return developer;
+        }
+
+        private static Developer DeveloperUpdateMapping(DeveloperModel developerModel)
+        {
+            Developer? developer = null;
+
+            developer = new()
+            {
+                Id = developerModel.Id,
                 FirstName = developerModel.FirstName,
                 LastName = developerModel.LastName,
                 Email = developerModel.Email,
