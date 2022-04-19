@@ -61,6 +61,9 @@ namespace Blazor.Learner.Server.Controllers
         public async Task<IActionResult> Post(DeveloperModel developerModel)
         {
 
+           if(developerModel.PositionId < 1)
+              developerModel.PositionId = await _context.Positions.Select(x => x.PositionId).FirstOrDefaultAsync();
+
             var developer = DeveloperAddMapping(developerModel);
             _context.Developers.Add(developer);
             await _context.SaveChangesAsync();
@@ -87,7 +90,7 @@ namespace Blazor.Learner.Server.Controllers
         }
 
         #region PrivateMethod
-        private static Developer DeveloperAddMapping(DeveloperModel developerModel)
+        private  static Developer DeveloperAddMapping(DeveloperModel developerModel)
         {
             Developer? developer = null;
 
@@ -96,7 +99,7 @@ namespace Blazor.Learner.Server.Controllers
                 FirstName = developerModel.FirstName,
                 LastName = developerModel.LastName,
                 Email = developerModel.Email,
-                PositionId = developerModel.PositionId,
+                PositionId = developerModel.PositionId, 
                 Experience = developerModel.Experience
             };
             return developer;
