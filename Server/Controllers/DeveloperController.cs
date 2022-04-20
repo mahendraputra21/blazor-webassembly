@@ -44,7 +44,7 @@ namespace Blazor.Learner.Server.Controllers
         /// <summary>
         /// Get Spesific Developer By Id
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">  ID Developer to Return </param>
         /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
@@ -69,7 +69,7 @@ namespace Blazor.Learner.Server.Controllers
         /// <summary>
         /// Add New Developer
         /// </summary>
-        /// <param name="developerModel"></param>
+        /// <param name="developerModel">Input param for add new Developer</param>
         /// <returns>A newly created Developer</returns>
         /// <remarks>
         /// Sample request:
@@ -102,7 +102,7 @@ namespace Blazor.Learner.Server.Controllers
         /// <summary>
         /// Update Existing Developer
         /// </summary>
-        /// <param name="developerModel"></param>
+        /// <param name="developerModel"> Description : Developer object that needs to be updated</param>
         /// <returns></returns>
         [HttpPut]
         public async Task<IActionResult> Put(DeveloperModel developerModel)
@@ -117,7 +117,7 @@ namespace Blazor.Learner.Server.Controllers
         /// <summary>
         /// Deletes a spesific Developer By Id
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">  ID of Developer to delete</param>
         /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
