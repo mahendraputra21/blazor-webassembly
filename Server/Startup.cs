@@ -1,5 +1,6 @@
 ﻿using Blazor.Learner.Server.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace Blazor.Learner.Server
 {
@@ -14,7 +15,14 @@ namespace Blazor.Learner.Server
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSwaggerGen(); // add swagger services
+            //services.AddSwaggerGen(); // add swagger services
+
+            services.AddSwaggerGen(option =>
+            {
+                // using System.Reflection;
+                var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                option.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+            });
 
             services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             //services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDBContext>();
@@ -42,6 +50,7 @@ namespace Blazor.Learner.Server
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
+                    c.DocumentTitle = "HR System API";
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Blazor API V1");
                 });
             }
