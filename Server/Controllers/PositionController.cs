@@ -15,6 +15,10 @@ namespace Blazor.Learner.Server.Controllers
             this._context = context;
         }
 
+        /// <summary>
+        /// Get All Positions 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetAllPosition()
         {
@@ -27,6 +31,11 @@ namespace Blazor.Learner.Server.Controllers
             return Ok(positions);
         }
 
+        /// <summary>
+        /// Get Spesific Position By Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPositionById(int id)
         {

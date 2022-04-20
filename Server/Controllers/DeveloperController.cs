@@ -6,8 +6,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Blazor.Learner.Server.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class DeveloperController : ControllerBase
     {
         private readonly ApplicationDBContext _context;
@@ -17,6 +17,10 @@ namespace Blazor.Learner.Server.Controllers
             this._context = context;
         }
 
+        /// <summary>
+        /// Get All Developers
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -37,6 +41,11 @@ namespace Blazor.Learner.Server.Controllers
             return Ok(devList);
         }
 
+        /// <summary>
+        /// Get Spesific Developer By Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
@@ -57,6 +66,26 @@ namespace Blazor.Learner.Server.Controllers
             return Ok(existingDev);
         }
 
+        /// <summary>
+        /// Add New Developer
+        /// </summary>
+        /// <param name="developerModel"></param>
+        /// <returns>A newly created Developer</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /api/Developer
+        ///     {
+        ///        "firstName": "Jhon",
+        ///        "lastName": "Doe",
+        ///        "email": "jhon.doe@mailinator.com",
+        ///        "experience": 9,
+        ///        "positionId": 1
+        ///     }
+        ///
+        /// </remarks>
+        /// <response code="200">Returns the newly created Developer</response>
+        /// <response code="400">If the item is null</response>
         [HttpPost]
         public async Task<IActionResult> Post(DeveloperModel developerModel)
         {
@@ -70,6 +99,11 @@ namespace Blazor.Learner.Server.Controllers
             return Ok(developer.Id);
         }
 
+        /// <summary>
+        /// Update Existing Developer
+        /// </summary>
+        /// <param name="developerModel"></param>
+        /// <returns></returns>
         [HttpPut]
         public async Task<IActionResult> Put(DeveloperModel developerModel)
         {
@@ -80,6 +114,11 @@ namespace Blazor.Learner.Server.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Deletes a spesific Developer By Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
