@@ -34,7 +34,7 @@ namespace Blazor.Learner.Server.Controllers
         /// <summary>
         /// Get Spesific Position By Id
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id"> ID position to return</param>
         /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPositionById(int id)
