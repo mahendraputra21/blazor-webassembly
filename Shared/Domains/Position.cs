@@ -7,6 +7,5 @@ namespace Blazor.Learner.Shared.Domains
         [Required]
         public int PositionId { get; set; }
         public string? PositionName { get; set; }
-
     }
 }

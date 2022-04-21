@@ -1,0 +1,33 @@
+﻿@inject NavigationManager _nav
+@inject HttpClient _client
+
+
+<EditForm Model="@Position" OnValidSubmit="@OnValidSubmit">
+<DataAnnotationsValidator />
+
+<div class="mb-3">
+    <label>Position Name :</label>
+    <div>
+        <InputText @bind-Value="@Position.PositionName"  class="form-control"/>
+        <ValidationMessage For="@(() => Position.PositionName)" />
+    </div>
+</div>
+
+<button type="submit" class="btn btn-success">
+    @ButtonText
+</button>
+<button type="reset" class="btn btn-primary" onclick="@(() => _nav.NavigateTo("/position"))">
+    Back
+</button>
+
+</EditForm>
+
+
+
+
+@code {
+    [Parameter] public Position? Position { get; set; }
+    [Parameter] public string? ButtonText { get; set; }
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+}
