@@ -5,7 +5,10 @@ namespace Blazor.Learner.Server.Data
 {
     public class ApplicationDBContext : DbContext
     {
-        public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options) { }
+        public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options) 
+        {
+            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+        }
 
         public DbSet<Developer> Developers { get; set; }
         public DbSet<Position> Positions { get; set; }

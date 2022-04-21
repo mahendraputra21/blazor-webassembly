@@ -1,0 +1,17 @@
+﻿@page "/position/create"
+@inject HttpClient _httpClient
+@inject NavigationManager _uriHelper
+
+<h3>Create The Position</h3>
+
+<Form ButtonText="Create Position" Position="@_position" OnValidSubmit="@CreatePosition"></Form>
+
+@code {
+    readonly Position _position = new();
+
+    private async Task CreatePosition()
+    {
+        await _httpClient.PostAsJsonAsync("api/position", _position);
+        _uriHelper.NavigateTo("position");
+    }
+}

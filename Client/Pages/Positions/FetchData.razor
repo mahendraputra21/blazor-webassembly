@@ -1,0 +1,54 @@
+﻿@page "/position"
+@inject HttpClient _client
+
+<h3>List of Positions</h3>
+<small>Add Position as you wish.</small>
+<div class="mb-3">
+    <a class="btn btn-success" href="position/create"><i class="oi oi-plus"></i> Create New</a>
+</div>
+<br/>
+
+@if(Positions == null)
+{
+    <text>Loading...</text>
+}
+else if(Positions.Length == 0)
+{
+    <text>No Records Found.</text>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th style="display:none">Id</th>
+            <th scope="col">Position Name</th>
+        </tr>
+        </thead>
+        <tbody>
+            @foreach (var pos in Positions)
+            {
+                <tr>
+                    <td style="display:none">@pos.PositionId</td>
+                    <td>@pos.PositionName</td>
+                    <td>
+                        @*<a class="btn btn-success" href="developer/edit/@dev.Id">Edit</a>
+                        <button class="btn btn-danger" @onclick="@(() => Delete(dev.Id))">Delete</button>*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+
+@code {
+    private Position[]? Positions { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Positions = (await _client.GetFromJsonAsync<Position[]>("api/position"))!;
+    }
+
+}
